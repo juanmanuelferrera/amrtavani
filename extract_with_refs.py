@@ -17,6 +17,8 @@ SKIP_PATTERNS = [
     r'^\d+\.\s*$', r'^[a-z]{2,}—', r'^Table of Contents', r'^Contents$',
     r'^His Divine Grace', r'^A\.C\. Bhaktivedanta', r'^Founder-', r'^Macmillan',
     r'^Chapter\s', r'^Canto\s',
+    r'Thus end the Bhaktivedanta purports',  # Chapter endings
+    r'Thus ends the Bhaktivedanta purport',
 ]
 
 # Word to number mapping
