@@ -1,0 +1,12 @@
+name = "amrtavani-bot"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# KV namespace for storing quote index
+kv_namespaces = [
+  { binding = "AMRTAVANI_KV", id = "e8b31d74251841119c3889846cde9a82" }
+]
+
+# Cron trigger - daily at 7:00 AM UTC (9:00 AM Madrid time)
+[triggers]
+crons = ["0 7 * * *"]

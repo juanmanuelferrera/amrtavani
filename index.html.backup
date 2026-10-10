@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amrtavani - Words of Nectar</title>
+  <meta name="description" content="10,000 verbatim quotes from Srila Prabhupada, Founder-Acarya of ISKCON">
+  <meta property="og:title" content="Amrtavani - Words of Nectar">
+  <meta property="og:description" content="10,000 verbatim quotes from Srila Prabhupada, Founder-Acarya of ISKCON">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Amrtavani - 10,000 Prabhupada Quotes">
+  <meta name="twitter:description" content="Verbatim quotes from Srila Prabhupada, Founder-Acarya of ISKCON">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #faf9f7;
+      --text: #333333;
+      --text-muted: #666;
+      --accent: #8b4513;
+      --border: #e0ddd8;
+      --card-bg: #fff;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1a1a1a;
+      --text: #f5f5f5;
+      --text-muted: #999;
+      --accent: #d4a574;
+      --border: #333;
+      --card-bg: #242424;
+    }
+
+    [data-theme="sepia"] {
+      --bg: #f4ecd8;
+      --text: #3d3029;
+      --text-muted: #6b5d4d;
+      --accent: #8b4513;
+      --border: #d4c9b0;
+      --card-bg: #faf6eb;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* Header */
+    header {
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    .logo span {
+      font-weight: 400;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-left: 0.5rem;
+    }
+
+    .controls {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .btn {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .theme-select {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.5rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    /* Main content */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .quote-container {
+      text-align: center;
+      opacity: 1;
+      transition: opacity 0.4s ease;
+    }
+
+    .quote-container.fade {
+      opacity: 0;
+    }
+
+    .quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 4vw, 2.25rem);
+      line-height: 1.6;
+      font-weight: 400;
+      max-width: 750px;
+      margin: 0 auto 2rem;
+      font-style: italic;
+    }
+
+    .quote-text::before {
+      content: '"';
+      color: var(--accent);
+      font-size: 1.3em;
+    }
+
+    .quote-text::after {
+      content: '"';
+      color: var(--accent);
+      font-size: 1.3em;
+    }
+
+    .quote-source {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-style: normal;
+    }
+
+    .quote-source::before {
+      content: '— ';
+    }
+
+    .quote-reference {
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-top: 0.5rem;
+      font-style: normal;
+    }
+
+    .category-tag {
+      display: none; /* Hidden - only book reference shown */
+    }
+
+    /* Navigation */
+    .nav-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      align-items: center;
+    }
+
+    .nav-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      font-size: 1.25rem;
+    }
+
+    .nav-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: scale(1.05);
+    }
+
+    .nav-btn:active {
+      transform: scale(0.95);
+    }
+
+    .nav-btn.random {
+      width: auto;
+      padding: 0 1.25rem;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      gap: 0.4rem;
+    }
+
+    /* Footer */
+    footer {
+      padding: 1rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-image {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 20%;
+      margin-bottom: 0.5rem;
+      border: 2px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .footer-text {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .footer-text strong {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.15rem;
+    }
+
+    /* Keyboard hints */
+    .keyboard-hints {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      opacity: 0.5;
+    }
+
+    .keyboard-hints kbd {
+      background: var(--border);
+      padding: 0.15rem 0.4rem;
+      border-radius: 3px;
+      margin: 0 0.1rem;
+    }
+
+    /* Share modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .share-card {
+      background-color: #2c1810;
+      background-image: linear-gradient(135deg, rgba(44,24,16,0.75) 0%, rgba(74,44,26,0.75) 100%),
+                        url('prabhupada.jpg');
+      background-size: cover;
+      background-position: center 20%;
+      color: #ffffff;
+      padding: 3rem;
+      border-radius: 12px;
+      max-width: 500px;
+      width: 100%;
+      position: relative;
+    }
+
+    .share-card-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      line-height: 1.6;
+      font-style: italic;
+      margin-bottom: 1.5rem;
+    }
+
+    .share-card-source {
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+
+    .share-card-footer {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      opacity: 0.7;
+    }
+
+    .share-card-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -3rem;
+      right: 0;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .share-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .share-btn {
+      flex: 1;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: opacity 0.2s;
+    }
+
+    .share-btn:hover {
+      opacity: 0.9;
+    }
+
+    .share-btn.copy {
+      background: #f5f0e8;
+      color: #2c1810;
+    }
+
+    .share-btn.download {
+      background: #d4a574;
+      color: #1a1a1a;
+    }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      header {
+        padding: 1rem;
+      }
+
+      .logo span {
+        display: none;
+      }
+
+      main {
+        padding: 1.5rem 1rem;
+      }
+
+      .quote-text {
+        font-size: 1.35rem;
+      }
+
+      .keyboard-hints {
+        display: none;
+      }
+
+      .nav-buttons {
+        margin-top: 1rem;
+      }
+
+      footer {
+        padding: 0.75rem;
+      }
+
+      .footer-image {
+        width: 50px;
+        height: 50px;
+      }
+
+      .footer-text {
+        font-size: 0.65rem;
+        line-height: 1.4;
+      }
+
+      .footer-text strong {
+        font-size: 0.75rem;
+      }
+    }
+
+    /* Touch swipe indicator */
+    .swipe-hint {
+      display: none;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    @media (pointer: coarse) {
+      .swipe-hint {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body data-theme="light">
+  <header>
+    <div class="logo">
+      Amrtavani
+      <span>Words of Nectar</span>
+    </div>
+    <div class="controls">
+      <select class="theme-select" id="themeSelect" aria-label="Select theme">
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+        <option value="sepia">Sepia</option>
+      </select>
+      <button class="btn" id="shareBtn" aria-label="Share quote">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/>
+        </svg>
+        Share
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <div class="quote-container" id="quoteContainer">
+      <p class="quote-text" id="quoteText">Loading...</p>
+      <p class="quote-source" id="quoteSource"></p>
+      <p class="quote-reference" id="quoteReference"></p>
+      <span class="category-tag" id="quoteCategory"></span>
+    </div>
+
+    <nav class="nav-buttons">
+      <button class="nav-btn" id="prevBtn" aria-label="Previous quote">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
+      <button class="nav-btn random" id="randomBtn" aria-label="Random quote">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>
+        </svg>
+        Random
+      </button>
+      <button class="nav-btn" id="nextBtn" aria-label="Next quote">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
+      </button>
+    </nav>
+
+    <p class="swipe-hint">Swipe left or right to navigate</p>
+  </main>
+
+  <footer>
+    <img
+      src="prabhupada.jpg"
+      alt="Srila Prabhupada"
+      class="footer-image"
+      loading="lazy"
+    >
+    <p class="footer-text">
+      <strong>His Divine Grace A.C. Bhaktivedanta Swami Prabhupada</strong>
+      Founder-Acarya of the International Society for Krishna Consciousness
+    </p>
+  </footer>
+
+  <div class="keyboard-hints">
+    <kbd>&larr;</kbd> <kbd>&rarr;</kbd> navigate &nbsp; <kbd>space</kbd> random
+  </div>
+
+  <!-- Share Modal -->
+  <div class="modal-overlay" id="shareModal">
+    <div style="position: relative;">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <div class="share-card" id="shareCard">
+        <p class="share-card-quote" id="shareCardQuote"></p>
+        <p class="share-card-source" id="shareCardSource"></p>
+        <div class="share-card-footer">
+          <span class="share-card-logo">Amrtavani</span>
+          <span>vedicvault.org</span>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="share-btn copy" id="copyBtn">Copy Text</button>
+        <button class="share-btn download" id="downloadBtn">Download Image</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let quotes = [];
+    let currentIndex = 0;
+
+    // Load quotes
+    async function loadQuotes() {
+      try {
+        const response = await fetch('quotes.json');
+        quotes = await response.json();
+        // Start with random quote (or from URL hash if present)
+        const hash = window.location.hash.slice(1);
+        const startIndex = hash ? parseInt(hash, 10) - 1 : Math.floor(Math.random() * quotes.length);
+        showQuote(startIndex);
+      } catch (e) {
+        document.getElementById('quoteText').textContent = 'Error loading quotes';
+      }
+    }
+
+    // Show quote with animation
+    function showQuote(index, direction = 0) {
+      if (quotes.length === 0) return;
+
+      // Wrap around
+      if (index < 0) index = quotes.length - 1;
+      if (index >= quotes.length) index = 0;
+
+      currentIndex = index;
+      const quote = quotes[index];
+      const container = document.getElementById('quoteContainer');
+
+      // Fade out
+      container.classList.add('fade');
+
+      setTimeout(() => {
+        // Convert *word* to italics
+        const formattedQuote = quote.quote.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+        document.getElementById('quoteText').innerHTML = formattedQuote;
+        document.getElementById('quoteSource').textContent = quote.source;
+        document.getElementById('quoteReference').textContent = quote.reference || '';
+        // Category tag hidden per user request - only show book reference
+
+        // Fade in
+        container.classList.remove('fade');
+      }, 200);
+
+      // Update URL
+      history.replaceState(null, '', `#${index + 1}`);
+    }
+
+    // Navigation
+    document.getElementById('prevBtn').addEventListener('click', () => showQuote(currentIndex - 1, -1));
+    document.getElementById('nextBtn').addEventListener('click', () => showQuote(currentIndex + 1, 1));
+    document.getElementById('randomBtn').addEventListener('click', () => {
+      let newIndex;
+      do {
+        newIndex = Math.floor(Math.random() * quotes.length);
+      } while (newIndex === currentIndex && quotes.length > 1);
+      showQuote(newIndex);
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+      switch(e.key) {
+        case 'ArrowLeft':
+          showQuote(currentIndex - 1, -1);
+          break;
+        case 'ArrowRight':
+          showQuote(currentIndex + 1, 1);
+          break;
+        case ' ':
+          e.preventDefault();
+          document.getElementById('randomBtn').click();
+          break;
+      }
+    });
+
+    // Touch swipe
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    document.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+          showQuote(currentIndex + 1, 1);
+        } else {
+          showQuote(currentIndex - 1, -1);
+        }
+      }
+    }, { passive: true });
+
+    // Theme
+    const themeSelect = document.getElementById('themeSelect');
+    const savedTheme = localStorage.getItem('amrtavani-theme') || 'light';
+    document.body.dataset.theme = savedTheme;
+    themeSelect.value = savedTheme;
+
+    themeSelect.addEventListener('change', (e) => {
+      document.body.dataset.theme = e.target.value;
+      localStorage.setItem('amrtavani-theme', e.target.value);
+    });
+
+    // Share modal
+    const shareModal = document.getElementById('shareModal');
+    const shareBtn = document.getElementById('shareBtn');
+    const modalClose = document.getElementById('modalClose');
+
+    shareBtn.addEventListener('click', () => {
+      const quote = quotes[currentIndex];
+      // Convert *word* to italics for share card
+      const formattedQuote = quote.quote.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+      document.getElementById('shareCardQuote').innerHTML = `"${formattedQuote}"`;
+      document.getElementById('shareCardSource').textContent = `— ${quote.source}${quote.reference ? ', ' + quote.reference : ''}`;
+      shareModal.classList.add('active');
+    });
+
+    modalClose.addEventListener('click', () => {
+      shareModal.classList.remove('active');
+    });
+
+    shareModal.addEventListener('click', (e) => {
+      if (e.target === shareModal) {
+        shareModal.classList.remove('active');
+      }
+    });
+
+    // Copy text
+    document.getElementById('copyBtn').addEventListener('click', async () => {
+      const quote = quotes[currentIndex];
+      const ref = quote.reference ? `\n${quote.reference}` : '';
+      const text = `"${quote.quote}"\n\n— Srila Prabhupada${ref}\n\namrtavani.pages.dev`;
+
+      try {
+        await navigator.clipboard.writeText(text);
+        document.getElementById('copyBtn').textContent = 'Copied!';
+        setTimeout(() => {
+          document.getElementById('copyBtn').textContent = 'Copy Text';
+        }, 2000);
+      } catch (e) {
+        alert('Could not copy text');
+      }
+    });
+
+    // Download image (using html2canvas if available, otherwise just copy)
+    document.getElementById('downloadBtn').addEventListener('click', async () => {
+      const card = document.getElementById('shareCard');
+
+      // Try to use html2canvas if loaded
+      if (typeof html2canvas !== 'undefined') {
+        const canvas = await html2canvas(card, {
+          backgroundColor: null,
+          scale: 2
+        });
+        const link = document.createElement('a');
+        link.download = `amrtavani-quote-${currentIndex + 1}.png`;
+        link.href = canvas.toDataURL();
+        link.click();
+      } else {
+        // Fallback: just copy the text
+        alert('Image download requires html2canvas library. Text copied instead.');
+        document.getElementById('copyBtn').click();
+      }
+    });
+
+    // Handle URL hash
+    function handleHash() {
+      const hash = window.location.hash.slice(1);
+      const index = parseInt(hash) - 1;
+      if (!isNaN(index) && index >= 0 && index < quotes.length) {
+        showQuote(index);
+      }
+    }
+
+    window.addEventListener('hashchange', handleHash);
+
+    // Init
+    loadQuotes().then(() => {
+      if (window.location.hash) {
+        handleHash();
+      }
+    });
+  </script>
+
+  <!-- html2canvas for image generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+</body>
+</html>
